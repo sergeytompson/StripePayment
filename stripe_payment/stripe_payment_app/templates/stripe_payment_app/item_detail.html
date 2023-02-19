@@ -7,32 +7,21 @@
 <body>
     <h1>{{ item.name }}</h1>
     <p>Описание товара: {{ item.detail }}</p>
-    <p>Стоимость - {{ item.price }} рублей</p>
+    <p>Стоимость - {{ item.price|floatformat:2 }} рублей</p>
     <button id="buy-button">Buy</button>
-<!--    <script type="text/javascript">-->
-<!--      var stripe = Stripe('pk_test_51McuuSBMgDeLhXVHGArOJHhkSvEJflMgepL2LtEfhcZKUEds61P70QfDXBCuE3UGWGevN6AQdEgQdIuA47lRK8D500oZIwvSn0');-->
-<!--      var buyButton = document.search.buy-button;-->
-<!--      buyButton.addEventListener('click', function() {-->
-<!--        console.log('зашли в функцию')-->
-<!--        fetch('/buy/1')-->
-<!--        .then(response => return response.json())-->
-<!--        .then(session => stripe.redirectToCheckout({ sessionId: session.id }))-->
-<!--      });-->
-<!--    </script>-->
     <script src="https://js.stripe.com/v3/"></script>
     <script type="text/javascript">
       var buyButton = document.getElementById('buy-button');
       var stripe = Stripe('pk_test_51McuuSBMgDeLhXVHGArOJHhkSvEJflMgepL2LtEfhcZKUEds61P70QfDXBCuE3UGWGevN6AQdEgQdIuA47lRK8D500oZIwvSn0');
       function sayHi(){
-        let url = 'http://127.0.0.1:8000/buy/1';
+        let url = '/buy/1';
         fetch(url)
         .then(function(response) {
             return response.json();
           })
           .then(function(session) {
-            alert(session.id);
+            return stripe.redirectToCheckout({ sessionId: session.id });
           })
-          .catch(alert);
         }
       buyButton.addEventListener('click', sayHi);
     </script>

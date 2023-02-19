@@ -5,7 +5,7 @@ from django.urls import reverse
 class Item(models.Model):
     name = models.CharField("Название товара", max_length=100)
     description = models.TextField("Описание товара", blank=True, null=True)
-    price = models.DecimalField("Цена товара", max_digits=19, decimal_places=2)
+    price = models.PositiveIntegerField("Цена товара")
 
     class Meta:
         verbose_name = "Товар"
