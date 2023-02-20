@@ -2,19 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ item.name }}</title>
+    <title>Заказ</title>
 </head>
 <body>
-    <h1>{{ item.name }}</h1>
-    <p>Описание товара: {{ item.detail }}</p>
-    <p>Стоимость - {{ item.price|floatformat:2 }} рублей</p>
+    {% if this_order.items %}
+        {% for item in this_order.items.all %}
+            <p>{{ item.name }} | {{ item.price|floatformat:2 }} рублей</p>
+        {% endfor %}
+    {% endif %}
+
     <button id="buy-button">Buy</button>
     <script src="https://js.stripe.com/v3/"></script>
     <script type="text/javascript">
       var buyButton = document.getElementById('buy-button');
       var stripe = Stripe('pk_test_51McuuSBMgDeLhXVHGArOJHhkSvEJflMgepL2LtEfhcZKUEds61P70QfDXBCuE3UGWGevN6AQdEgQdIuA47lRK8D500oZIwvSn0');
       function stripeRedirect(){
-        let url = '/buy/{{ item.pk }}';
+        let url = '/order_buy/{{ order.pk }}';
         fetch(url)
         .then(function(response) {
             return response.json();
@@ -24,16 +27,6 @@
           })
         }
       buyButton.addEventListener('click', stripeRedirect);
-    </script>
-    <button id="add-to-order-button">Add to order</button><p>
-    <a href="{% url 'order' order.pk %}">Перейти к заказу</a></p>
-    <script type="text/javascript">
-      var addButton = document.getElementById('add-to-order-button');
-      function addToOrder(){
-        let url = '/add_item_to_order/{{ order.pk }}/{{ item.pk }}';
-        fetch(url)
-        }
-      addButton.addEventListener('click', addToOrder);
     </script>
 </body>
 </html>

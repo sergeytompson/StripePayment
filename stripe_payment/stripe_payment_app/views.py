@@ -1,13 +1,10 @@
-import os
-import stripe
-
 from django import http
+from django.http import HttpResponse
 from django.views.generic import DetailView, View
 
-from .models import Item
+from .models import Item, Order
 
-
-stripe.api_key = os.environ.get("STRIPE_IP_KEY")
+from utils.session import get_session
 
 
 class ItemDetailView(DetailView):
@@ -16,7 +13,7 @@ class ItemDetailView(DetailView):
 
     def get_object(self, queryset=None):
         obj = super().get_object()
-        obj.price = obj.price / 100
+        obj.price /= 100
         return obj
 
 
@@ -24,18 +21,34 @@ class BuyView(View):
 
     def get(self, request, pk):
         item = Item.objects.get(pk=pk)
-        session = stripe.checkout.Session.create(
-            line_items=[{
-                'price_data': {
-                    'currency': 'rub',
-                    'product_data': {
-                        'name': item.name,
-                    },
-                    'unit_amount': int(item.price),
-                },
-                'quantity': 1,
-            }],
-            mode='payment',
-            success_url='http://localhost:8000/success',
-        )
+        session = get_session([item])
+        return http.JsonResponse(session)
+
+
+class OrderView(DetailView):
+    model = Order
+    queryset = Order.objects.prefetch_related('items')
+    context_object_name = "this_order"
+
+    def get_object(self, queryset=None):
+        obj = super().get_object()
+        for item in obj.items.all():
+            item.price /= 100
+        return obj
+
+
+
+class ItemToOrderView(View):
+
+    def get(self, request, order_pk, item_pk):
+        Order.objects.get(pk=order_pk).items.add(Item.objects.get(pk=item_pk))
+        return HttpResponse()
+
+
+class BuyOrderView(View):
+
+    def get(self, request, pk):
+        order = Order.objects.prefetch_related('items').get(pk=pk)
+        items = order.items.all()
+        session = get_session(items)
         return http.JsonResponse(session)
