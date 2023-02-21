@@ -1,0 +1,136 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$390000$QDqVRCXCNSLdl0pDstmzTS$9ztcFXWaRwlMBtf5fsy7LirluoD3hbq3yF0e2WMf3/s=",
+      "last_login": "2023-02-21T03:39:38Z",
+      "is_superuser": true,
+      "username": "superuser",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2023-02-19T17:22:52Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "stripe_payment_app.item",
+    "pk": 1,
+    "fields": {
+      "name": "Автомобиль",
+      "description": "",
+      "price": 3000000,
+      "currency": "rub"
+    }
+  },
+  {
+    "model": "stripe_payment_app.item",
+    "pk": 2,
+    "fields": {
+      "name": "Микроволновка",
+      "description": "",
+      "price": 300000,
+      "currency": "rub"
+    }
+  },
+  {
+    "model": "stripe_payment_app.item",
+    "pk": 3,
+    "fields": {
+      "name": "Стиральная машина",
+      "description": "",
+      "price": 30000,
+      "currency": "usd"
+    }
+  },
+  {
+    "model": "stripe_payment_app.item",
+    "pk": 4,
+    "fields": {
+      "name": "Пылесос",
+      "description": "",
+      "price": 100000,
+      "currency": "rub"
+    }
+  },
+  {
+    "model": "stripe_payment_app.item",
+    "pk": 5,
+    "fields": {
+      "name": "Посудомойка",
+      "description": "",
+      "price": 100000,
+      "currency": "usd"
+    }
+  },
+  {
+    "model": "stripe_payment_app.item",
+    "pk": 6,
+    "fields": {
+      "name": "Холодильник",
+      "description": "",
+      "price": 150000,
+      "currency": "usd"
+    }
+  },
+  {
+    "model": "stripe_payment_app.item",
+    "pk": 7,
+    "fields": {
+      "name": "Телевизор",
+      "description": "",
+      "price": 2000000,
+      "currency": "rub"
+    }
+  },
+  {
+    "model": "stripe_payment_app.item",
+    "pk": 8,
+    "fields": {
+      "name": "Чайник",
+      "description": "",
+      "price": 5000,
+      "currency": "usd"
+    }
+  },
+  {
+    "model": "stripe_payment_app.item",
+    "pk": 9,
+    "fields": {
+      "name": "Блендер",
+      "description": "",
+      "price": 75000,
+      "currency": "rub"
+    }
+  },
+  {
+    "model": "stripe_payment_app.item",
+    "pk": 10,
+    "fields": {
+      "name": "Увлажнитель воздуха",
+      "description": "",
+      "price": 40000,
+      "currency": "usd"
+    }
+  },
+  {
+    "model": "stripe_payment_app.tax",
+    "pk": 1,
+    "fields": {
+      "display_name": "VAT",
+      "inclusive": false,
+      "percentage": "20.0000"
+    }
+  },
+  {
+    "model": "stripe_payment_app.discount",
+    "pk": 3,
+    "fields": {
+      "percent_off": "13.5"
+    }
+  }
+]
