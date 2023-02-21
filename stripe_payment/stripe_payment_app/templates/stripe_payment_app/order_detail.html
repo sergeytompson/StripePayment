@@ -7,7 +7,7 @@
 <body>
     {% if this_order.items.all %}
         {% for item in this_order.items.all %}
-            <p>{{ item.name }} | {{ item.price|floatformat:2 }} рублей</p>
+            <p>{{ item.name }} | {{ item.price|floatformat:2 }} {{ item.currency }}</p>
         {% endfor %}
         {% if this_order.tax %}
             <p>Размер {{ this_order.tax.display_name }} на ваш заказ: {{ this_order.tax.percentage|floatformat:-4 }} %</p>

@@ -5,7 +5,7 @@ import stripe
 
 ITEM_FORM = {
     'price_data': {
-        'currency': 'rub',
+        'currency': None,
         'product_data': {
             'name': None,
         },
@@ -31,6 +31,7 @@ def get_session(items, tax=None, discount=None):
     for item in items:
         item_form = deepcopy(ITEM_FORM)
         item_form['price_data']['product_data']['name'] = item.name
+        item_form['price_data']['currency'] = item.currency
         item_form['price_data']['unit_amount'] = item.price
         if tax_rate:
             item_form['tax_rates'] = [tax_rate.id]

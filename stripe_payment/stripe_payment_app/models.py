@@ -1,11 +1,18 @@
 from django.db import models
 from django.urls import reverse
 
+from .validators import is_positive
+
 
 class Item(models.Model):
+    CURRENCIES = [
+        ('rub', 'рублей'),
+        ('usd', 'долларов')
+    ]
     name = models.CharField("Название товара", max_length=100)
     description = models.TextField("Описание товара", blank=True, null=True)
     price = models.PositiveIntegerField("Цена товара")
+    currency = models.CharField('Валюта', choices=CURRENCIES, max_length=3, default='rub')
 
     class Meta:
         verbose_name = "Товар"
@@ -21,7 +28,7 @@ class Item(models.Model):
 class Tax(models.Model):
     display_name = models.CharField("Короткое название", max_length=50)
     inclusive = models.BooleanField("Включается ли в стоимость", default=False)
-    percentage = models.DecimalField("Налоговая ставка", max_digits=6, decimal_places=4)
+    percentage = models.DecimalField("Налоговая ставка", max_digits=6, decimal_places=4, validators=[is_positive, ])
 
     class Meta:
         verbose_name = "Налог"
@@ -32,7 +39,7 @@ class Tax(models.Model):
 
 
 class Discount(models.Model):
-    percent_off = models.DecimalField("Скидка", max_digits=3, decimal_places=1)
+    percent_off = models.DecimalField("Скидка", max_digits=3, decimal_places=1, validators=[is_positive, ])
 
     class Meta:
         verbose_name = "Скидка"

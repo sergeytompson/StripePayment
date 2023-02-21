@@ -8,7 +8,7 @@ class ItemAdmin(admin.ModelAdmin):
     list_display = ("pk", "name",)
     list_display_links = ("pk", "name")
     search_fields = ("name",)
-    fields = ("name", "description", "price",)
+    fields = ("name", "description", "price", "currency",)
 
 
 @admin.register(Order)
