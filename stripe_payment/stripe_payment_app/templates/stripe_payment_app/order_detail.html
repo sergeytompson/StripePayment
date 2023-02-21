@@ -5,13 +5,21 @@
     <title>Заказ</title>
 </head>
 <body>
-    {% if this_order.items %}
+    {% if this_order.items.all %}
         {% for item in this_order.items.all %}
             <p>{{ item.name }} | {{ item.price|floatformat:2 }} рублей</p>
         {% endfor %}
+        {% if this_order.tax %}
+            <p>Размер {{ this_order.tax.display_name }} на ваш заказ: {{ this_order.tax.percentage|floatformat:-4 }} %</p>
+        {% endif %}
+        {% if this_order.discount %}
+            <p>Размер вашей скидки: {{ this_order.discount.percent_off|floatformat:-1 }} %</p>
+        {% endif %}
+        <button id="buy-button">Buy</button>
+    {% else %}
+        <p>Вы не добавили товары в заказ</p>
     {% endif %}
 
-    <button id="buy-button">Buy</button>
     <script src="https://js.stripe.com/v3/"></script>
     <script type="text/javascript">
       var buyButton = document.getElementById('buy-button');

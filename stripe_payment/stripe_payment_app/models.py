@@ -18,5 +18,38 @@ class Item(models.Model):
         return reverse("item", kwargs={"pk": self.pk})
 
 
+class Tax(models.Model):
+    display_name = models.CharField("Короткое название", max_length=50)
+    inclusive = models.BooleanField("Включается ли в стоимость", default=False)
+    percentage = models.DecimalField("Налоговая ставка", max_digits=6, decimal_places=4)
+
+    class Meta:
+        verbose_name = "Налог"
+        verbose_name_plural = "Налоги"
+
+    def __str__(self) -> str:
+        return self.display_name
+
+
+class Discount(models.Model):
+    percent_off = models.DecimalField("Скидка", max_digits=3, decimal_places=1)
+
+    class Meta:
+        verbose_name = "Скидка"
+        verbose_name_plural = "Скидки"
+
+    def __str__(self) -> str:
+        return str(self.percent_off)
+
+
 class Order(models.Model):
     items = models.ManyToManyField(Item)
+    tax = models.ForeignKey(Tax, on_delete=models.SET_NULL, blank=True, null=True)
+    discount = models.ForeignKey(Discount, on_delete=models.SET_NULL, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Заказ"
+        verbose_name_plural = "Заказы"
+
+    def __str__(self) -> str:
+        return 'Заказ №' + str(self.pk)

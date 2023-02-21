@@ -37,7 +37,6 @@ class OrderView(DetailView):
         return obj
 
 
-
 class ItemToOrderView(View):
 
     def get(self, request, order_pk, item_pk):
@@ -49,6 +48,9 @@ class BuyOrderView(View):
 
     def get(self, request, pk):
         order = Order.objects.prefetch_related('items').get(pk=pk)
+        tax = order.tax
+        discount = order.discount
         items = order.items.all()
-        session = get_session(items)
+        session = get_session(items, tax, discount)
+        order.delete()
         return http.JsonResponse(session)

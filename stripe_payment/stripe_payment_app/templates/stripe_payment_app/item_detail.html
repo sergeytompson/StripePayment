@@ -31,7 +31,8 @@
       var addButton = document.getElementById('add-to-order-button');
       function addToOrder(){
         let url = '/add_item_to_order/{{ order.pk }}/{{ item.pk }}';
-        fetch(url)
+        fetch(url);
+        alert('Товар добавлен в заказ')
         }
       addButton.addEventListener('click', addToOrder);
     </script>
